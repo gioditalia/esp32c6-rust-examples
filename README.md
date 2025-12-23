@@ -110,29 +110,6 @@ cargo run --release -- --port /dev/ttyUSB0
 sudo chmod 666 /dev/ttyUSB0
 ```
 
-
-## 🤝 Contribuire
-
-Contributi benvenuti! Per aggiungere un esempio:
-
-1. Crea un nuovo file in `src/bin/nome-esempio.rs`
-2. Aggiungi entry in `Cargo.toml`:
-   ```toml
-   [[bin]]
-   name = "nome-esempio"
-   path = "./src/bin/nome-esempio.rs"
-   ```
-3. Documenta con doc comments (//!)
-4. Testa su hardware reale
-5. Apri una Pull Request
-
-### Guidelines
-- ✅ Codice ben commentato (italiano o inglese)
-- ✅ Doc comments dettagliati
-- ✅ Schema collegamenti hardware
-- ✅ Output di esempio
-- ✅ Gestione errori appropriata
-
 ## 🙏 Ringraziamenti
 
 - [esp-rs](https://github.com/esp-rs) team per gli HAL e tool eccellenti

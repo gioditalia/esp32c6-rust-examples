@@ -1,0 +1,53 @@
+[package]
+name         = "esp32c6-rust-examples"
+version      = "0.1.0"
+edition      = "2024"
+rust-version = "1.88"
+# authors      = ["Your Name <your.email@example.com>"]
+description  = "ESP32-C6 Rust examples and templates collection"
+license      = "MIT OR Apache-2.0"
+# repository   = "https://github.com/yourusername/esp32c6-rust-examples"
+keywords     = ["esp32", "esp32c6", "embedded", "no-std", "template"]
+categories   = ["embedded", "no-std"]
+readme       = "README.md"
+
+[[bin]]
+name = "hello-world"
+path = "./src/bin/main.rs"
+
+[[bin]]
+name = "blink"
+path = "./src/bin/blink.rs"
+
+[[bin]]
+name = "ws2812"
+path = "./src/bin/ws2812.rs"
+required-features = ["ws2812"]
+
+[dependencies]
+# Dipendenze comuni a tutti gli esempi
+esp-hal = { version = "~1.0", features = ["esp32c6"] }
+esp-bootloader-esp-idf = { version = "0.4.0", features = ["esp32c6"] }
+esp-println = { version = "0.11", features = ["esp32c6"] }
+critical-section = "1.2.0"
+
+# Dipendenze opzionali per esempi specifici
+ws2812-spi = { version = "0.5", optional = true }
+smart-leds-trait = { version = "0.3", optional = true }
+
+[features]
+ws2812 = ["ws2812-spi", "smart-leds-trait"]
+
+[profile.dev]
+# Rust debug is too slow.
+# For debug builds always builds with some optimization
+opt-level = "s"
+
+[profile.release]
+codegen-units    = 1     # LLVM can perform better optimizations using a single thread
+debug            = 2
+debug-assertions = false
+incremental      = false
+lto              = 'fat'
+opt-level        = 's'
+overflow-checks  = false

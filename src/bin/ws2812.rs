@@ -19,11 +19,11 @@
 
 use esp_hal::clock::CpuClock;
 use esp_hal::main;
+use esp_hal::spi::master::{Config, Spi};
 use esp_hal::time::{Duration, Instant, Rate};
-use esp_hal::spi::master::{Spi, Config};
-use ws2812_spi::Ws2812;
-use smart_leds_trait::{SmartLedsWrite, RGB8};
 use esp_println::println;
+use smart_leds_trait::{RGB8, SmartLedsWrite};
+use ws2812_spi::Ws2812;
 
 #[panic_handler]
 fn panic(info: &core::panic::PanicInfo) -> ! {
@@ -59,29 +59,29 @@ fn main() -> ! {
 
     // Crea driver WS2812 che converte RGB in pattern SPI
     let mut ws = Ws2812::new(spi);
-    
+
     // Variabile per la tonalità del colore (0-255)
     let mut hue = 0u8;
 
     loop {
         let start = Instant::now();
-        
+
         // Converte HSV a RGB e invia al LED
         let color = hsv_to_rgb(hue, 255, 100);
         ws.write([color].iter().cloned()).ok();
-        
+
         println!("Hue: {}", hue);
-        
+
         // Incrementa tonalità per effetto arcobaleno
         hue = hue.wrapping_add(2);
-        
+
         // Mantiene 50 FPS (~20ms per frame)
         while start.elapsed() < Duration::from_millis(20) {}
     }
 }
 
 /// Converte colore da HSV a RGB
-/// 
+///
 /// HSV (Hue, Saturation, Value) è più intuitivo per animazioni:
 /// - h: tonalità 0-255 (posizione nella ruota dei colori)
 /// - s: saturazione 0-255 (intensità del colore)
@@ -102,11 +102,11 @@ fn hsv_to_rgb(h: u8, s: u8, v: u8) -> RGB8 {
 
     // Seleziona RGB in base alla regione
     match region {
-        0 => RGB8::new(v, t as u8, p as u8),        // Rosso → Giallo
-        1 => RGB8::new(q as u8, v, p as u8),        // Giallo → Verde
-        2 => RGB8::new(p as u8, v, t as u8),        // Verde → Ciano
-        3 => RGB8::new(p as u8, q as u8, v),        // Ciano → Blu
-        4 => RGB8::new(t as u8, p as u8, v),        // Blu → Magenta
-        _ => RGB8::new(v, p as u8, q as u8),        // Magenta → Rosso
+        0 => RGB8::new(v, t as u8, p as u8), // Rosso → Giallo
+        1 => RGB8::new(q as u8, v, p as u8), // Giallo → Verde
+        2 => RGB8::new(p as u8, v, t as u8), // Verde → Ciano
+        3 => RGB8::new(p as u8, q as u8, v), // Ciano → Blu
+        4 => RGB8::new(t as u8, p as u8, v), // Blu → Magenta
+        _ => RGB8::new(v, p as u8, q as u8), // Magenta → Rosso
     }
 }

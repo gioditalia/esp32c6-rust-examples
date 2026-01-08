@@ -40,9 +40,6 @@ cargo install espup
 # Installa toolchain ESP32
 espup install
 
-# Carica variabili d'ambiente (esegui ad ogni nuova sessione terminal)
-. ~/export-esp.sh  # Linux/macOS
-# O aggiungi a ~/.bashrc per renderlo permanente
 ```
 
 ### 2. Installa Tool di Flash
@@ -55,7 +52,7 @@ cargo install espflash cargo-espflash
 
 ```bash
 # Sostituisci con la tua URL dopo aver creato la repo su GitHub
-git clone https://github.com/<your-username>/esp32c6-rust-examples
+git clone https://github.com/gioditalia/esp32c6-rust-examples
 cd esp32c6-rust-examples
 
 # Esegui l'esempio hello-world
@@ -93,28 +90,7 @@ esp32c6-rust-examples/
 - 🎥 [ESP32 Embedded Rust at the HAL](https://www.youtube.com/playlist?list=PLkch9g9DEE0Lkm1LqcD7pZNDmXEczOo-a)
 - 💬 [ESP-RS Matrix Chat](https://matrix.to/#/#esp-rs:matrix.org)
 
-## 🐛 Troubleshooting
-
-### Errore "Port not found"
-```bash
-# Linux
-sudo usermod -a -G dialout $USER
-# Logout e login
-
-# Specifica porta manualmente
-cargo run --release -- --port /dev/ttyUSB0
-```
-
-### Errore "Permission denied"
-```bash
-sudo chmod 666 /dev/ttyUSB0
-```
-
 ## 🙏 Ringraziamenti
 
 - [esp-rs](https://github.com/esp-rs) team per gli HAL e tool eccellenti
 - Community Rust per supporto e documentazione
-- Tutti i contributor di questa repo
-
-
-**Buon coding! 🦀✨**

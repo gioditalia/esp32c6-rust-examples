@@ -14,14 +14,23 @@ readme       = "README.md"
 [[bin]]
 name = "hello-world"
 path = "./src/bin/main.rs"
+test = false
+doctest = false
+bench = false
 
 [[bin]]
 name = "blink"
 path = "./src/bin/blink.rs"
+test = false
+doctest = false
+bench = false
 
 [[bin]]
 name = "ws2812"
 path = "./src/bin/ws2812.rs"
+test = false
+doctest = false
+bench = false
 required-features = ["ws2812"]
 
 [dependencies]
